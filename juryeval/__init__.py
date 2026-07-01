@@ -1,8 +1,36 @@
-"""Lightweight NLP/LLM evaluation toolkit for metrics, LLM-as-Judge,
-statistical significance testing, prompt robustness analysis, and CLI.
+"""**juryeval** is a lightweight toolkit for evaluating NLP and LLM outputs —
+one library that covers classic automated metrics, LLM-as-a-Judge scoring,
+the statistics needed to trust a comparison, and checks for how stable a
+prompt actually is. It's built to be a fast smoke-test in a notebook, a CLI
+for CI pipelines, and a drop-in dependency for frameworks like LM Eval
+Harness, DeepEval, Lighteval, and LangChain — not a heavyweight eval platform.
 
-Designed for fast smoke-tests, demos, and as a drop-in dependency for
-frameworks like LM Eval Harness, DeepEval, Lighteval, and LangChain.
+Automated metrics (BLEU, ROUGE) miss semantic quality; LLM judges catch more
+but carry their own biases (position, length, self-preference) and need
+statistical rigor before you trust a win rate. juryeval gives you all three
+pieces together, each usable standalone.
+
+## Features
+
+- **Classic metrics** — classification (accuracy/F1), translation (BLEU),
+  summarization (ROUGE-1/2/L), fluency (perplexity, Flesch-Kincaid
+  readability), semantic similarity (sentence-transformer embeddings),
+  BERTScore.
+- **LLM-as-Judge** — `PairwiseJudge` and `PointwiseJudge` for comparing or
+  scoring model outputs with an LLM, `MultiJudgeEnsemble` for majority-vote
+  aggregation across judges, and `JudgeCalibration` to quantify a judge's
+  position bias, consistency, length bias, and self-enhancement bias before
+  you trust its verdicts.
+- **Statistical significance** — bootstrap confidence intervals and
+  p-values, win/tie/loss rates, and model-vs-model comparison, so "Model A
+  beat Model B" comes with a number backing it up.
+- **Prompt robustness** — `PromptVariance` reruns a task across prompt
+  template variants and reports how much outputs actually change, surfacing
+  prompts that are too brittle to trust.
+- **CLI** — score, compare, evaluate, calibrate, and prompt-sensitivity
+  commands for quick checks without writing Python.
+- **Framework integrations** — lm-eval-harness, DeepEval, Lighteval, and
+  LangChain.
 
 ## Install
 
